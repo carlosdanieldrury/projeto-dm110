@@ -1,0 +1,1 @@
+include "projeto-ear", "projeto-war", "projeto-api", "projeto-impl", "projeto-ejb", "projeto-ejb-client"

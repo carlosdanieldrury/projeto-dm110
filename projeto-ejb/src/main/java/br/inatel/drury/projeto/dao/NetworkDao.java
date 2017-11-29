@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import br.inatel.drury.projeto.api.Equipment;
+import br.inatel.drury.projeto.entities.Equipment;
 
 public class NetworkDao {
 	

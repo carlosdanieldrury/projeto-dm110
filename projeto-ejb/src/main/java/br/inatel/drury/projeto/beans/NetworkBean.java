@@ -1,5 +1,6 @@
 package br.inatel.drury.projeto.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -39,6 +40,24 @@ public class NetworkBean implements NetworkLocal, NetworkRemote {
 	public br.inatel.drury.projeto.api.Equipment getEquipmentStatus(String ip) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<br.inatel.drury.projeto.api.Equipment> getEquipments() {
+		// TODO Auto-generated method stub
+		List<br.inatel.drury.projeto.api.Equipment> equipments = new ArrayList<>();
+		
+		List<Equipment> listEntities = networkDao.getEquipments();
+		
+		for (Equipment entity : listEntities) {
+			br.inatel.drury.projeto.api.Equipment equipment = new br.inatel.drury.projeto.api.Equipment();
+			equipment.setIp(entity.getIp());
+			equipment.setStatus(true);
+			
+			equipments.add(equipment);
+		}
+		
+		return equipments;
 	}
 	
 }

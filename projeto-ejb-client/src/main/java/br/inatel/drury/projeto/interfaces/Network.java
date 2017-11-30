@@ -10,4 +10,6 @@ public interface Network {
 	
 	Equipment getEquipmentStatus(String ip);
 	
+	List<Equipment> getEquipments();
+	
 }

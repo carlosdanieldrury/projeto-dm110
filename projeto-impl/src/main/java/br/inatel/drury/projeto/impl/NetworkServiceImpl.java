@@ -2,28 +2,27 @@ package br.inatel.drury.projeto.impl;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 
 import br.inatel.drury.projeto.api.Equipment;
 import br.inatel.drury.projeto.api.NetworkService;
+import br.inatel.drury.projeto.interfaces.NetworkRemote;
 
 @RequestScoped
 public class NetworkServiceImpl implements NetworkService {
 	
-//	@EJB(lookup = "java:app/dm110-ejb-0.1-SNAPSHOT/HelloBean!br.inatel.dm110.hello.interfaces.HelloRemote")
-//	private HelloRemote hello;
-
+	@EJB(lookup = "java:app/projeto-ejb-0.1-SNAPSHOT/NetworkBean!br.inatel.drury.projeto.interfaces.NetworkRemote")
+	private NetworkRemote networkRemote;
 
 	@Override
 	public List<Equipment> getListEquipment(String ip, String mask) {
-		// TODO Auto-generated method stub
-		return null;
+		return networkRemote.getEquipments();
 	}
 
 	@Override
 	public Equipment getIpStatus(String ip) {
-		// TODO Auto-generated method stub
-		return null;
+		return networkRemote.getEquipmentStatus(ip);
 	}
 
 }

@@ -8,16 +8,16 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/api")
+@Path("/poller")
 public interface NetworkService {
 
 	@GET
-	@Path("/poller/start/{ip}/{mask}")
+	@Path("/start/{ip}/{mask}")
 	@Produces(MediaType.APPLICATION_JSON)
 	List<Equipment> getListEquipment(@PathParam("ip") String ip , @PathParam("mask") String mask);
 	
 	@GET
-	@Path("/poller/status/{ip}")
+	@Path("/status/{ip}")
 	@Produces(MediaType.APPLICATION_JSON)
 	Equipment getIpStatus(@PathParam("ip") String ip);
 	

@@ -10,7 +10,7 @@ import br.inatel.drury.projeto.interfaces.NetworkLocal;
 
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
-		@ActivationConfigProperty(propertyName="destination", propertyValue="java:/jms/queue/dm110queue"),
+		@ActivationConfigProperty(propertyName="destination", propertyValue="java:/jms/queue/projetoqueue"),
 		@ActivationConfigProperty(propertyName="maxSession", propertyValue="5")
 })
 public class NetworkMdb implements MessageListener {

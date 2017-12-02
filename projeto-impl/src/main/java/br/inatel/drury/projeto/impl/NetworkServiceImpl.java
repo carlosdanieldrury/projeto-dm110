@@ -1,5 +1,6 @@
 package br.inatel.drury.projeto.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,8 +17,26 @@ public class NetworkServiceImpl implements NetworkService {
 	private NetworkRemote networkRemote;
 
 	@Override
-	public List<Equipment> getListEquipment(String ip, String mask) {
-		return networkRemote.getEquipments();
+	public void start(String ip, int cidr) {
+		
+		List<String> networkIps = NetworkIPFinder.getIPList(ip, cidr);
+		List<String> ipToBeSent = new ArrayList<String>();
+		
+		for (String ipString : networkIps) {
+			ipToBeSent.add(ipString);
+			
+			if (ipToBeSent.size() == 10) {
+				networkRemote.insertEquipment(ipToBeSent);
+				ipToBeSent = new ArrayList<>();
+			}
+			
+		}
+		
+		if (ipToBeSent.size() > 0) {
+			networkRemote.insertEquipment(ipToBeSent);
+		}
+		
+
 	}
 
 	@Override

@@ -1,12 +1,10 @@
-package br.inatel.drury.projeto.network;
+package br.inatel.drury.projeto.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import br.inatel.drury.projeto.dao.NetworkDao;
 
 public class NetworkIPFinder {
 
@@ -17,37 +15,12 @@ public class NetworkIPFinder {
 		List<String> ipEquipementOn = new ArrayList<String>();
 		
 		for (String ip : ipList) {
-			if (execPing(ip)) {
 				ipEquipementOn.add(ip);
-			}
 		}
 		
 		return ipEquipementOn;
 	}
 	
-	public static boolean execPing(String address) {
-		try {
-			Runtime runtime = Runtime.getRuntime();
-			Process process = runtime.exec("ping -n 1 " + address);
-			InputStream is = process.getInputStream();
-			InputStream es = process.getErrorStream();
-			String input = processStream(is);
-			String error = processStream(es);
-			int code = process.waitFor();
-			if (code != 0) {
-				return false;
-			}
-			if (error.length() > 0) {
-				return false;
-			}
-			if (input.contains("Host de destino inacess") || input.contains("Destination host unreachable")) {
-				return false;
-			}
-			return true;
-		} catch (IOException | InterruptedException e) {
-			return false;
-		}
-	}
 
 	private static List<String> generateIps(String networkIp, int cidr) {
 		List<String> ipList = new ArrayList<String>();
@@ -78,15 +51,6 @@ public class NetworkIPFinder {
 		return String.format("%s.%s.%s.%s", value >> 24, (value >> 16) & 255, (value >> 8) & 255, value & 255);
 	}
 	
-	public static String processStream(InputStream is) {
-		StringBuilder input = new StringBuilder();
-		try (Scanner scanner = new Scanner(is)) {
-			while (scanner.hasNextLine()) {
-				input.append(scanner.nextLine()).append("\n");
-			}
-		}
-		return input.toString();
-	}
 
 	
 }

@@ -22,10 +22,12 @@ public class NetworkDao {
 		return em.createQuery("from Equipment e", Equipment.class).getResultList();
 	}
 	
-	public Equipment getEquipmentStatus(String ip) {
-		TypedQuery<Equipment> query = em.createQuery("from Cliente c where ip = :ip ", Equipment.class);
-		query.setParameter("ip", ip);
-		return query.getSingleResult();
+	public String getEquipmentStatus(String ip) {
+		String result = String.valueOf(em.createQuery("from Cliente c where ip = :ip ", Equipment.class)
+				.setParameter("ip", ip)
+				.getSingleResult()
+				.isUp());
+		return result;
 	}
 
 }

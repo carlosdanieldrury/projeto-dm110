@@ -12,7 +12,7 @@ import br.inatel.drury.projeto.entities.Equipment;
 import br.inatel.drury.projeto.dao.NetworkDao;
 import br.inatel.drury.projeto.interfaces.NetworkLocal;
 import br.inatel.drury.projeto.interfaces.NetworkRemote;
-import br.inatel.drury.projeto.network.NetworkIPFinder;
+import br.inatel.drury.projeto.network.ListNetwork;
 
 
 @Stateless
@@ -20,21 +20,8 @@ import br.inatel.drury.projeto.network.NetworkIPFinder;
 @Remote(NetworkRemote.class)
 public class NetworkBean implements NetworkLocal, NetworkRemote {
 	
-	@EJB
-	NetworkDao networkDao;
-
-	@Override
-	public List<String> getAvailableEquipmentOnNetwork(String networkIp, int cidr) {
-		List<String> ipList = NetworkIPFinder.getIPList(networkIp, cidr);
-		for (String ip : ipList) {
-			Equipment equipment = new Equipment();
-			equipment.setIp(ip);
-			equipment.setUp(true);
-			networkDao.insertEquipment(equipment);
-		}
-		
-		return ipList;
-	}
+	private NetworkMessageSender networkMessageSender;
+	
 	
 	@Override
 	public br.inatel.drury.projeto.api.Equipment getEquipmentStatus(String ip) {
@@ -42,22 +29,14 @@ public class NetworkBean implements NetworkLocal, NetworkRemote {
 		return null;
 	}
 
+
 	@Override
-	public List<br.inatel.drury.projeto.api.Equipment> getEquipments() {
+	public void insertEquipment(List<String> networkIps) {
 		// TODO Auto-generated method stub
-		List<br.inatel.drury.projeto.api.Equipment> equipments = new ArrayList<>();
+		ListNetwork listObjects = new ListNetwork();
+		listObjects.setNetworkIps(networkIps);
 		
-		List<Equipment> listEntities = networkDao.getEquipments();
-		
-		for (Equipment entity : listEntities) {
-			br.inatel.drury.projeto.api.Equipment equipment = new br.inatel.drury.projeto.api.Equipment();
-			equipment.setIp(entity.getIp());
-			equipment.setStatus(true);
-			
-			equipments.add(equipment);
-		}
-		
-		return equipments;
+		networkMessageSender.sendIps(listObjects);
 	}
 	
 }

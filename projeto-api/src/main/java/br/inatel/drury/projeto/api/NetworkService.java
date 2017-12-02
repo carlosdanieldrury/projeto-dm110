@@ -14,7 +14,7 @@ public interface NetworkService {
 	@GET
 	@Path("/start/{ip}/{mask}")
 	@Produces(MediaType.APPLICATION_JSON)
-	List<Equipment> getListEquipment(@PathParam("ip") String ip , @PathParam("mask") String mask);
+	void start(@PathParam("ip") String ip , @PathParam("mask") int cidr);
 	
 	@GET
 	@Path("/status/{ip}")

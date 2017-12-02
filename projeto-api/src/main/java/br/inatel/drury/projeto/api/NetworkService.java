@@ -19,6 +19,6 @@ public interface NetworkService {
 	@GET
 	@Path("/status/{ip}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Equipment getIpStatus(@PathParam("ip") String ip);
+	String getIpStatus(@PathParam("ip") String ip);
 	
 }

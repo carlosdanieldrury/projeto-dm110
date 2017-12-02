@@ -2,12 +2,14 @@ package br.inatel.drury.projeto.dao;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import br.inatel.drury.projeto.entities.Equipment;
 
+@Stateless
 public class NetworkDao {
 	
 	@PersistenceContext(unitName = "network")
@@ -23,9 +25,10 @@ public class NetworkDao {
 	}
 	
 	public String getEquipmentStatus(String ip) {
-		String result = String.valueOf(em.createQuery("from Cliente c where ip = :ip ", Equipment.class)
+		String result = String.valueOf(em.createQuery("from Equipment e where ip = :ip ", Equipment.class)
 				.setParameter("ip", ip)
-				.getSingleResult()
+				.getResultList()
+				.get(0)
 				.isUp());
 		return result;
 	}

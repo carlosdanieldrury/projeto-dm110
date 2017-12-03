@@ -40,7 +40,7 @@ public class NetworkServiceImpl implements NetworkService {
 	}
 
 	@Override
-	public String getIpStatus(String ip) {
+	public Equipment getIpStatus(String ip) {
 		return networkRemote.getEquipmentStatus(ip);
 	}
 

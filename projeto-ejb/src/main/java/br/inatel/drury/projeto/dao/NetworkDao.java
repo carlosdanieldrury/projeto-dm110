@@ -24,12 +24,12 @@ public class NetworkDao {
 		return em.createQuery("from Equipment e", Equipment.class).getResultList();
 	}
 	
-	public String getEquipmentStatus(String ip) {
-		String result = String.valueOf(em.createQuery("from Equipment e where ip = :ip ", Equipment.class)
+	public boolean getEquipmentStatus(String ip) {
+		boolean result = em.createQuery("from Equipment e where ip = :ip ", Equipment.class)
 				.setParameter("ip", ip)
 				.getResultList()
 				.get(0)
-				.isUp());
+				.isUp();
 		return result;
 	}
 

@@ -1,6 +1,8 @@
 package br.inatel.drury.projeto.api;
 
-public class Equipment {
+import java.io.Serializable;
+
+public class Equipment implements Serializable {
 	
 	private String ip;
 	

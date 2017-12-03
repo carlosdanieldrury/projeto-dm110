@@ -54,16 +54,17 @@ public class NetworkBean implements NetworkLocal, NetworkRemote {
 	}
 	
 	@Override
-	public String getEquipmentStatus(String ip) {
-		return networkDao.getEquipmentStatus(ip);
+	public br.inatel.drury.projeto.api.Equipment getEquipmentStatus(String ip) {
+		br.inatel.drury.projeto.api.Equipment equipment = new br.inatel.drury.projeto.api.Equipment();
+		equipment.setIp(ip);
+		equipment.setStatus(networkDao.getEquipmentStatus(ip));
+		return equipment;
 	}
 	
 	
 
 	@Override
 	public void insertEquipment(List<String> networkIps) {
-		// TODO Auto-generated method stub
-
 		ListNetwork listObjects = new ListNetwork();
 		listObjects.setNetworkIps(networkIps);
 		
